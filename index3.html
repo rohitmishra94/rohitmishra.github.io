@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Mishra - AI/ML Consultant</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --amber: #ffb000;
+            --amber-dark: #2b2100;
+            --green: #3af23a;
+            --green-dark: #001100;
+            --blue: #2e8dff;
+            --blue-dark: #000f1f;
+            --bg-color: var(--green-dark);
+            --text-color: var(--green);
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(58, 242, 58, 0.3);
+        }
+
+        /* Color Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .theme-green { background-color: var(--green); }
+        .theme-amber { background-color: var(--amber); }
+        .theme-blue { background-color: var(--blue); }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid var(--text-color);
+            padding: calc(var(--spacing-unit) * 1.5) 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .terminal-prompt::before {
+            content: '> ';
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: calc(var(--spacing-unit) * 2);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .project-card {
+            border: 2px solid var(--text-color);
+            background: rgba(0, 0, 0, 0.2);
+            padding: calc(var(--spacing-unit) * 1.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--text-color),
+                transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-unit);
+            padding-left: calc(var(--spacing-unit) * 1.5);
+            position: relative;
+        }
+
+        .project-title::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            animation: blink 1s infinite;
+        }
+
+        .project-description {
+            margin-bottom: var(--spacing-unit);
+            padding-left: calc(var(--spacing-unit) * 1.5);
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--spacing-unit) / 2);
+            margin-top: var(--spacing-unit);
+            padding-left: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .tag {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--text-color);
+            padding: calc(var(--spacing-unit) / 4) calc(var(--spacing-unit) / 2);
+            font-size: 0.9rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: var(--spacing-unit);
+            margin-left: calc(var(--spacing-unit) * 1.5);
+            color: var(--text-color);
+            text-decoration: none;
+            border: 1px solid var(--text-color);
+            padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .project-link:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 2rem;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: calc(var(--spacing-unit) / 2);
+            position: relative;
+        }
+
+        .section-header::before {
+            content: '[sys]';
+            font-size: 1rem;
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+            opacity: 0.7;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Scanline effect */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--text-color);
+            opacity: 0.1;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Old screen effect */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-unit: 0.8rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-title {
+                font-size: 1.2rem;
+            }
+
+            .project-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    <div class="crt-overlay"></div>
+    
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo terminal-prompt">ROHIT_MISHRA.exe</a>
+            <div class="theme-switcher">
+                <button class="theme-btn theme-green" onclick="setTheme('green')"></button>
+                <button class="theme-btn theme-amber" onclick="setTheme('amber')"></button>
+                <button class="theme-btn theme-blue" onclick="setTheme('blue')"></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="projects">
+            <h2 class="section-header terminal-prompt">PROJECTS</h2>
+            <div class="projects-grid">
+                <!-- LLM Judge Project -->
+                <div class="project-card">
+                    <h3 class="project-title">LLM as Judge Evaluation</h3>
+                    <p class="project-description">
+                        Developed an evaluation system using GPT-4 and Gemini Pro 1.5 to assess model outputs. Implemented FastAPI endpoints for evaluating responses based on relevancy, fluency, and other metrics.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">GPT-4</span>
+                        <span class="tag">Gemini Pro</span>
+                        <span class="tag">FastAPI</span>
+                    </div>
+                    <a href="https://github.com/rohitmishra94/Eval" class="project-link" target="_blank">VIEW SOURCE</a>
+                </div>
+
+                <!-- PDF-RAG Project -->
+                <div class="project-card">
+                    <h3 class="project-title">PDF-RAG Agentic System</h3>
+                    <p class="project-description">
+                        Experimented with increasingly complex agent architectures, progressing from basic tool calling to multi-tool integration and finally full agent systems.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">RAG</span>
+                        <span class="tag">LLM</span>
+                        <span class="tag">Agents</span>
+                    </div>
+                    <a href="https://github.com/rohitmishra94/pdf-rag" class="project-link" target="_blank">VIEW SOURCE</a>
+                </div>
+                
+
+                <!-- Image Retrieval -->
+                <div class="project-card">
+                    <h3 class="project-title">Image Retrieval Search</h3>
+                    <p class="project-description">
+                        Conducted research on embedding retrieval efficiency, implementing transfer learning to enhance small models. Analyzed performance across different embedding dimensions and lengths.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Transfer Learning</span>
+                        <span class="tag">Vector Search</span>
+                        <span class="tag">Embeddings</span>
+                    </div>
+                    <a href="https://github.com/rohitmishra94/image-retreival" class="project-link" target="_blank">VIEW SOURCE</a>
+                </div>
+
+                <!-- Speech Detection -->
+                <div class="project-card">
+                    <h3 class="project-title">Synthetic Speech Detection</h3>
+                    <p class="project-description">
+                        Built a classifier using OpenSmile and TitaNet audio embeddings to detect synthetic speech, comparing performance across various classical ML algorithms.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">OpenSmile</span>
+                        <span class="tag">TitaNet</span>
+                        <span class="tag">ML Classification</span>
+                    </div>
+                    <a href="https://github.com/rohitmishra94/synthetic-speech-detection" class="project-link" target="_blank">VIEW SOURCE</a>
+                </div>
+
+                <!-- Watch Recognition -->
+                <div class="project-card">
+                    <h3 class="project-title">Watch Recognition System</h3>
+                    <p class="project-description">
+                        Created a vector database for watch identification, implementing cosine similarity search with Google Lens fallback. Used LLMs to extract watch features from search results.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Vector DB</span>
+                        <span class="tag">Google Lens</span>
+                        <span class="tag">Feature Extraction</span>
+                        <span class="tag">LLM</span>
+                    </div>
+                    <div class="project-link" style="cursor: not-allowed; opacity: 0.8;">
+                        [LOCKED] FREELANCE CLIENT PROJECT
+                    </div>
+                </div>
+
+                <!-- Legal Draft Generator -->
+                <div class="project-card">
+                    <h3 class="project-title">Legal Draft Generator</h3>
+                    <p class="project-description">
+                        Fine-tuned LLM models on legal datasets to generate contracts with inline editing capabilities. Implemented tool-calling agents for PDF generation and formatting.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">LLM Fine-tuning</span>
+                        <span class="tag">JSON Schema</span>
+                        <span class="tag">PDF Generation</span>
+                        <span class="tag">Agents</span>
+                    </div>
+                    <div class="project-link" style="cursor: not-allowed; opacity: 0.8;">
+                        [LOCKED] FREELANCE CLIENT PROJECT
+                    </div>
+                </div>
+                <!-- Continue with other projects... -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="container">
+        <h2 class="section-header terminal-prompt">CONTACT</h2>
+        <div class="contact-links">
+            <style>
+                .contact-links {
+                    display: flex;
+                    flex-direction: column;
+                    gap: calc(var(--spacing-unit) * 1.5);
+                    margin-top: calc(var(--spacing-unit) * 2);
+                    padding: calc(var(--spacing-unit) * 2);
+                    border: 2px solid var(--text-color);
+                    background: rgba(0, 0, 0, 0.2);
+                }
+
+                .contact-link {
+                    display: flex;
+                    align-items: center;
+                    color: var(--text-color);
+                    text-decoration: none;
+                    font-size: 1.1rem;
+                    padding: calc(var(--spacing-unit));
+                    border: 1px solid var(--text-color);
+                    background: rgba(0, 0, 0, 0.2);
+                    transition: all 0.3s ease;
+                }
+
+                .contact-link:hover {
+                    background: var(--text-color);
+                    color: var(--bg-color);
+                    transform: translateX(10px);
+                }
+
+                .contact-link::before {
+                    content: '>';
+                    margin-right: calc(var(--spacing-unit));
+                    font-weight: bold;
+                }
+            </style>
+            <a href="mailto:rohitmishra.manit@gmail.com" class="contact-link">
+                EMAIL: rohitmishra.manit@gmail.com
+            </a>
+            <a href="https://github.com/rohitmishra94" target="_blank" class="contact-link">
+                GITHUB: github.com/rohitmishra94
+            </a>
+            <a href="https://linkedin.com/in/rohit-mishra-872a12104" target="_blank" class="contact-link">
+                LINKEDIN: rohit-mishra-872a12104
+            </a>
+            <a href="https://drive.google.com/file/d/19rUw3kleEdx3MB-D3r0bA2QSAPJqx-Eq/view?usp=sharing" target="_blank" class="contact-link">
+                DOWNLOAD_RESUME.pdf
+            </a>
+        </div>
+    </section>
+
+    <script>
+        function setTheme(theme) {
+            const root = document.documentElement;
+            switch(theme) {
+                case 'amber':
+                    root.style.setProperty('--bg-color', 'var(--amber-dark)');
+                    root.style.setProperty('--text-color', 'var(--amber)');
+                    break;
+                case 'blue':
+                    root.style.setProperty('--bg-color', 'var(--blue-dark)');
+                    root.style.setProperty('--text-color', 'var(--blue)');
+                    break;
+                default:
+                    root.style.setProperty('--bg-color', 'var(--green-dark)');
+                    root.style.setProperty('--text-color', 'var(--green)');
+            }
+        }
+    </script>
+</body>
+</html>
